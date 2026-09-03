@@ -10,7 +10,7 @@ import {
   ScrollView,
 } from 'react-native';
 
-const API_URL = 'http://192.168.1.3:5000';
+const API_URL = 'https://skillproof-ai-b0ax.onrender.com';
 
 export default function CompanySignup() {
   const [name, setName] = useState('');

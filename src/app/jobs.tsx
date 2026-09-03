@@ -11,7 +11,7 @@ import {
     View,
 } from 'react-native';
 
-const API_URL = 'http://192.168.1.3:5000';
+const API_URL = 'https://skillproof-ai-b0ax.onrender.com';
 
 const normalizeSkill = (skill: string) =>
     skill.toLowerCase().replace(/[^a-z0-9]/g, '');

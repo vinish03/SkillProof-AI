@@ -13,7 +13,7 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as DocumentPicker from 'expo-document-picker';
 
-const API_URL = 'http://192.168.1.3:5000';
+const API_URL = 'https://skillproof-ai-b0ax.onrender.com';
 
 export default function CandidateProfile() {
     const [candidate, setCandidate] = useState<any>(null);
