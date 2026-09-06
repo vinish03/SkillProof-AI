@@ -1,3 +1,5 @@
+🚀 Live Demo: https://skillproof-ai.expo.app
+💻 GitHub: https://github.com/vinish03/SkillProof-AI
 ![Candidate Dashboard](dashboard.png)
 # SkillProof AI
 
