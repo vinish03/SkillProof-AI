@@ -18,16 +18,20 @@ export default function CandidateLogin() {
         console.log('LOGIN CLICKED');
 
         if (!email || !password) {
-            Alert.alert(
-                'Error',
-                'Please enter email and password.'
-            );
+            if (typeof window !== 'undefined') {
+                window.alert('Please enter email and password.');
+            } else {
+                Alert.alert(
+                    'Error',
+                    'Please enter email and password.'
+                );
+            }
             return;
         }
 
         try {
             const response = await fetch(
-                'http://localhost:5000/api/candidate/login',
+                'https://skillproof-ai-b0ax.onrender.com/api/candidate/login',
                 {
                     method: 'POST',
                     headers: {
@@ -46,10 +50,16 @@ export default function CandidateLogin() {
             console.log('BACKEND RESPONSE:', data);
 
             if (!response.ok) {
-                Alert.alert(
-                    'Login Failed',
-                    data.message || 'Invalid email or password.'
-                );
+                if (typeof window !== 'undefined') {
+                    window.alert(
+                        data.message || 'Invalid email or password.'
+                    );
+                } else {
+                    Alert.alert(
+                        'Login Failed',
+                        data.message || 'Invalid email or password.'
+                    );
+                }
                 return;
             }
 
@@ -67,10 +77,16 @@ export default function CandidateLogin() {
         } catch (error) {
             console.error('Login error:', error);
 
-            Alert.alert(
-                'Connection Error',
-                'Could not connect to the SkillProof AI server.'
-            );
+            if (typeof window !== 'undefined') {
+                window.alert(
+                    'Could not connect to the SkillProof AI server.'
+                );
+            } else {
+                Alert.alert(
+                    'Connection Error',
+                    'Could not connect to the SkillProof AI server.'
+                );
+            }
         }
     };
 

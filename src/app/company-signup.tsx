@@ -23,18 +23,28 @@ export default function CompanySignup() {
 
   const handleSignup = async () => {
     if (!name || !email || !password) {
-      Alert.alert(
-        'Missing Information',
-        'Company name, email and password are required'
-      );
+      if (typeof window !== 'undefined') {
+        window.alert(
+          'Company name, email and password are required'
+        );
+      } else {
+        Alert.alert(
+          'Missing Information',
+          'Company name, email and password are required'
+        );
+      }
       return;
     }
 
     if (password !== confirmPassword) {
-      Alert.alert(
-        'Password Error',
-        'Passwords do not match'
-      );
+      if (typeof window !== 'undefined') {
+        window.alert('Passwords do not match');
+      } else {
+        Alert.alert(
+          'Password Error',
+          'Passwords do not match'
+        );
+      }
       return;
     }
 
@@ -64,10 +74,16 @@ export default function CompanySignup() {
       console.log('COMPANY SIGNUP RESPONSE:', data);
 
       if (!response.ok) {
-        Alert.alert(
-          'Signup Failed',
-          data.message || 'Something went wrong'
-        );
+        if (typeof window !== 'undefined') {
+          window.alert(
+            data.message || 'Something went wrong'
+          );
+        } else {
+          Alert.alert(
+            'Signup Failed',
+            data.message || 'Something went wrong'
+          );
+        }
         return;
       }
 
@@ -81,23 +97,37 @@ export default function CompanySignup() {
         data.company.name
       );
 
-      Alert.alert(
-        'Success',
-        'Company account created successfully',
-        [
-          {
-            text: 'Continue',
-            onPress: () => router.replace('/company-dashboard'),
-          },
-        ]
-      );
+      if (typeof window !== 'undefined') {
+        window.alert(
+          'Company account created successfully'
+        );
+        router.replace('/company-dashboard');
+      } else {
+        Alert.alert(
+          'Success',
+          'Company account created successfully',
+          [
+            {
+              text: 'Continue',
+              onPress: () =>
+                router.replace('/company-dashboard'),
+            },
+          ]
+        );
+      }
     } catch (error) {
       console.error('Company signup error:', error);
 
-      Alert.alert(
-        'Error',
-        'Unable to connect to the server'
-      );
+      if (typeof window !== 'undefined') {
+        window.alert(
+          'Unable to connect to the server'
+        );
+      } else {
+        Alert.alert(
+          'Error',
+          'Unable to connect to the server'
+        );
+      }
     } finally {
       setLoading(false);
     }
@@ -233,4 +263,3 @@ const styles = StyleSheet.create({
     color: '#5b4ee8',
   },
 });
-

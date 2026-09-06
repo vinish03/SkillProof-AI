@@ -3,6 +3,7 @@ import { router } from 'expo-router';
 import { useState } from 'react';
 import {
   Alert,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -18,7 +19,11 @@ export default function CompanyLogin() {
 
   const handleLogin = async () => {
     if (!email || !password) {
-      Alert.alert('Error', 'Please enter email and password');
+      if (typeof window !== 'undefined') {
+        window.alert('Please enter email and password');
+      } else {
+        Alert.alert('Error', 'Please enter email and password');
+      }
       return;
     }
 
@@ -40,62 +45,50 @@ export default function CompanyLogin() {
       console.log('COMPANY LOGIN RESPONSE:', data);
 
       if (!response.ok) {
-  Alert.alert('Login Failed', data.message || 'Invalid login details');
-  return;
-}
-
-console.log('COMPANY LOGIN DATA:', data);
-
-await AsyncStorage.setItem(
-  'companyId',
-  data.company._id
-);
-
-await AsyncStorage.setItem(
-  'companyName',
-  data.company.name
-);
-
-console.log(
-  'COMPANY NAME SAVED:',
-  data.company.name
-);
-
-Alert.alert('Success', 'Company login successful');
-
-router.replace('/company-dashboard');
-
-      // Save company information
-      const company = data.company;
-
-      if (company) {
-        await AsyncStorage.setItem(
-          'companyId',
-          company._id
-        );
-
-        await AsyncStorage.setItem(
-          'companyName',
-          company.name
-        );
-
-        console.log(
-          'COMPANY ID SAVED:',
-          company._id
-        );
-
-        console.log(
-          'COMPANY NAME SAVED:',
-          company.name
-        );
+        if (typeof window !== 'undefined') {
+          window.alert(data.message || 'Invalid login details');
+        } else {
+          Alert.alert(
+            'Login Failed',
+            data.message || 'Invalid login details'
+          );
+        }
+        return;
       }
 
-      Alert.alert(
-        'Success',
-        'Company login successful'
+      console.log('COMPANY LOGIN DATA:', data);
+
+      await AsyncStorage.setItem(
+        'companyId',
+        data.company._id
       );
 
-      router.replace('/company-dashboard');
+      await AsyncStorage.setItem(
+        'companyName',
+        data.company.name
+      );
+
+      console.log(
+        'COMPANY NAME SAVED:',
+        data.company.name
+      );
+
+      if (typeof window !== 'undefined') {
+        window.alert('Company login successful');
+        router.replace('/company-dashboard');
+      } else {
+        Alert.alert(
+          'Success',
+          'Company login successful',
+          [
+            {
+              text: 'OK',
+              onPress: () =>
+                router.replace('/company-dashboard'),
+            },
+          ]
+        );
+      }
 
     } catch (error) {
       console.error(
@@ -103,10 +96,14 @@ router.replace('/company-dashboard');
         error
       );
 
-      Alert.alert(
-        'Error',
-        'Cannot connect to server'
-      );
+      if (typeof window !== 'undefined') {
+        window.alert('Cannot connect to server');
+      } else {
+        Alert.alert(
+          'Error',
+          'Cannot connect to server'
+        );
+      }
     }
   };
 

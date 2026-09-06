@@ -21,24 +21,34 @@ export default function CandidateSignup() {
         console.log('CREATE ACCOUNT CLICKED');
 
         if (!name || !email || !password) {
-            Alert.alert(
-                'Error',
-                'Please fill in name, email and password.'
-            );
+            if (typeof window !== 'undefined') {
+                window.alert(
+                    'Please fill in name, email and password.'
+                );
+            } else {
+                Alert.alert(
+                    'Error',
+                    'Please fill in name, email and password.'
+                );
+            }
             return;
         }
 
         if (password !== confirmPassword) {
-            Alert.alert(
-                'Error',
-                'Passwords do not match.'
-            );
+            if (typeof window !== 'undefined') {
+                window.alert('Passwords do not match.');
+            } else {
+                Alert.alert(
+                    'Error',
+                    'Passwords do not match.'
+                );
+            }
             return;
         }
 
         try {
             const response = await fetch(
-                'http://localhost:5000/api/candidate/signup',
+                'https://skillproof-ai-b0ax.onrender.com/api/candidate/signup',
                 {
                     method: 'POST',
                     headers: {
@@ -63,31 +73,50 @@ export default function CandidateSignup() {
             console.log('BACKEND RESPONSE:', data);
 
             if (!response.ok) {
-                Alert.alert(
-                    'Signup Failed',
-                    data.message || 'Something went wrong.'
-                );
+                if (typeof window !== 'undefined') {
+                    window.alert(
+                        data.message || 'Something went wrong.'
+                    );
+                } else {
+                    Alert.alert(
+                        'Signup Failed',
+                        data.message || 'Something went wrong.'
+                    );
+                }
                 return;
             }
 
-            Alert.alert(
-                'Success',
-                'Candidate account created successfully!',
-                [
-                    {
-                        text: 'OK',
-                        onPress: () =>
-                            router.push('/candidate-login'),
-                    },
-                ]
-            );
+            if (typeof window !== 'undefined') {
+                window.alert(
+                    'Candidate account created successfully!'
+                );
+                router.push('/candidate-login');
+            } else {
+                Alert.alert(
+                    'Success',
+                    'Candidate account created successfully!',
+                    [
+                        {
+                            text: 'OK',
+                            onPress: () =>
+                                router.push('/candidate-login'),
+                        },
+                    ]
+                );
+            }
         } catch (error) {
             console.error('Signup error:', error);
 
-            Alert.alert(
-                'Connection Error',
-                'Could not connect to the SkillProof AI server.'
-            );
+            if (typeof window !== 'undefined') {
+                window.alert(
+                    'Could not connect to the SkillProof AI server.'
+                );
+            } else {
+                Alert.alert(
+                    'Connection Error',
+                    'Could not connect to the SkillProof AI server.'
+                );
+            }
         }
     };
 
