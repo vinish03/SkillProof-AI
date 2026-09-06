@@ -1,3 +1,4 @@
+![Candidate Dashboard](dashboard.png)
 # SkillProof AI
 
 SkillProof AI is a full-stack AI-powered recruitment and skill assessment mobile application built with React Native, Expo, Node.js, Express, and MongoDB.
